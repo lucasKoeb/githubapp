@@ -1,9 +1,10 @@
-﻿using System;
+﻿using GitHubApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GitHubApp.Models
+namespace GitHubApp.DAL
 {
     public interface IGHRepoRepository
     {
@@ -11,5 +12,6 @@ namespace GitHubApp.Models
         List<GHRepo> Retrieve();
         GHRepo Save(GHRepo ghrepo);
         GHRepo Save(int id, GHRepo ghrepo);
+        bool Exists(GHRepo ghrepo);
     }
 }

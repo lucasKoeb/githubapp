@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using GitHubApp.DAL;
 
 namespace GitHubApp
 {
@@ -32,7 +33,8 @@ namespace GitHubApp
             services.AddMvc();
 
             services.AddTransient<IGitHubAPI, GitHubAPI>();
-            services.AddScoped<IGHRepoRepository, GHRepoRepository>();            
+            services.AddScoped<IGHRepoRepository, GHRepoRepository>();
+            services.AddScoped<IGHRepoOwnerRepository, GHRepoOwnerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
