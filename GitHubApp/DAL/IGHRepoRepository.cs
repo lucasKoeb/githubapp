@@ -8,10 +8,11 @@ namespace GitHubApp.DAL
 {
     public interface IGHRepoRepository
     {
-        GHRepo Create();
-        List<GHRepo> Retrieve();
-        GHRepo Save(GHRepo ghrepo);
-        GHRepo Save(int id, GHRepo ghrepo);
+        Task<GHRepo> CreateAsync();
+        Task<List<GHRepo>> RetrieveAsync();
+        Task<GHRepo> RetrieveAsync(int id);
+        Task<GHRepo> SaveAsync(GHRepo ghrepo);
+        Task<GHRepo> SaveAsync(int id, GHRepo ghrepo);
         bool Exists(GHRepo ghrepo);
     }
 }

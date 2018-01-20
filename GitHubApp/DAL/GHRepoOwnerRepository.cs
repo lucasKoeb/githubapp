@@ -8,7 +8,7 @@ namespace GitHubApp.DAL
 {
     public class GHRepoOwnerRepository : IGHRepoOwnerRepository
     {
-        public GHRepoOwner Create()
+        public async Task<GHRepoOwner> CreateAsync()
         {
             throw new NotImplementedException();
         }
@@ -18,17 +18,17 @@ namespace GitHubApp.DAL
             throw new NotImplementedException();
         }
 
-        public List<GHRepoOwner> Retrieve()
+        public async Task<List<GHRepoOwner>> RetrieveAsync()
         {
             throw new NotImplementedException();
         }
 
-        public GHRepoOwner Save(GHRepoOwner ghrepo)
+        public async Task<GHRepoOwner> SaveAsync(GHRepoOwner ghrepo)
         {
             throw new NotImplementedException();
         }
 
-        public GHRepoOwner Save(int id, GHRepoOwner ghrepo)
+        public async Task<GHRepoOwner> SaveAsync(int id, GHRepoOwner ghrepo)
         {
             throw new NotImplementedException();
         }

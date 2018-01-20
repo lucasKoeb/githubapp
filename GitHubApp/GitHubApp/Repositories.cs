@@ -24,10 +24,20 @@ namespace GitHubApp.GitHubApp
             return values.items.ToObject<List<GHRepo>>();
         }
 
+        internal Task<List<GHRepo>> RetrieveAsync()
+        {
+            return _GHRepoRepository.RetrieveAsync();
+        }
+
+        internal Task<GHRepo> RetrieveAsync(int id)
+        {
+            return _GHRepoRepository.RetrieveAsync(id);
+        }
+
         public GHRepo Save(GHRepo ghrepo)
         {
             ghrepo = BeforeAdd(ghrepo);
-            _GHRepoRepository.Save(ghrepo);
+            _GHRepoRepository.SaveAsync(ghrepo);
             return ghrepo;
         }
 

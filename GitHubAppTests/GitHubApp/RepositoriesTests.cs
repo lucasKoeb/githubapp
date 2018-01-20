@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Xunit;
 using Moq;
 using GitHubApp.DAL;
+using System.Threading.Tasks;
 
 namespace GitHubAppTests.GitHubApp
 {
@@ -64,7 +65,7 @@ namespace GitHubAppTests.GitHubApp
                 id = 1,
                 owner = test_repository_owner
             };
-            GHRepoRepository.Setup(r => r.Save(test_repository)).Returns(test_repository);
+            GHRepoRepository.Setup(r => r.SaveAsync(test_repository)).Returns(Task.FromResult(test_repository));
 
             test_repository = repositories.Save(test_repository);
 

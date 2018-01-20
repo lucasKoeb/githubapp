@@ -1,5 +1,6 @@
 ﻿using GitHubApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,42 +17,42 @@ namespace GitHubApp.DAL
             _dbContext = context;
         }
 
-        public GHRepo Create()
+        public async Task<GHRepo> CreateAsync()
         {
             throw new NotImplementedException();
         }
 
-        public List<GHRepo> Retrieve()
-        {
-            throw new NotImplementedException();
+        public async Task<List<GHRepo>> RetrieveAsync()
+        {          
+            return await _dbContext.GHRepos.ToListAsync();
         }
 
-        public GHRepo Save(GHRepo ghrepo)
-        {
-            ghrepo = BeforeAdd(ghrepo);
+        public async Task<GHRepo> SaveAsync(GHRepo ghrepo)
+        {            
             _dbContext.Add(ghrepo);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             return ghrepo;
         }
 
-        public GHRepo Save(int id, GHRepo ghrepo)
+        public async Task<GHRepo> SaveAsync(int id, GHRepo ghrepo)
         {
             throw new NotImplementedException();
-        }        
-
-        public GHRepo BeforeAdd(GHRepo ghrepo)
-        {
-            ghrepo.owner_id = ghrepo.owner.id;
-            if (_dbContext.GHRepoOwners.Any(o => o.id == ghrepo.owner.id))
-            {
-                ghrepo.owner = null;
-            }
-            return ghrepo;  
         }
 
         public bool Exists(GHRepo ghrepo)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<GHRepo> RetrieveAsync(int id)
+        {
+            GHRepo ghrepo = await _dbContext.GHRepos.SingleOrDefaultAsync(m => m.id == id);
+            if (ghrepo == null)
+            {
+                return null;
+            }
+
+            return ghrepo;
         }
     }
 }
