@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,10 +8,13 @@ using System.Threading.Tasks;
 namespace GitHubApp.Models
 {     
     public class GHRepo
-    {
+    {        
+        [Range(1, int.MaxValue)]
         public int id { get; set; }
+        [Required]
         public string name { get; set; }
-        public string full_name { get; set; }
+        public string full_name { get; set; }     
+        [Range(1, int.MaxValue)]
         public int owner_id { get; set; }
 
         [ForeignKey("owner_id")]
