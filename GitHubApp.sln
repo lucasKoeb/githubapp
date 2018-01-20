@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubApp", "GitHubApp\GitHubApp.csproj", "{A5A9785F-1AD0-4CA2-AAAD-59B1B060B7EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitHubApp", "GitHubApp\GitHubApp.csproj", "{A5A9785F-1AD0-4CA2-AAAD-59B1B060B7EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubAppTests", "GitHubAppTests\GitHubAppTests.csproj", "{F6456DE2-8778-41F2-BD9C-AD472AE3276D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A5A9785F-1AD0-4CA2-AAAD-59B1B060B7EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5A9785F-1AD0-4CA2-AAAD-59B1B060B7EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5A9785F-1AD0-4CA2-AAAD-59B1B060B7EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6456DE2-8778-41F2-BD9C-AD472AE3276D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6456DE2-8778-41F2-BD9C-AD472AE3276D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6456DE2-8778-41F2-BD9C-AD472AE3276D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6456DE2-8778-41F2-BD9C-AD472AE3276D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
