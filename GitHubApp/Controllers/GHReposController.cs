@@ -50,7 +50,7 @@ namespace GitHubApp.Controllers
                 return NotFound();
             }
           
-            GHRepo viewModel = await _repositories.RetrieveAsync((int) id);
+            GHRepo viewModel = await _repositories.FindAsync((int) id);
 
             if (viewModel == null)
             {
@@ -60,112 +60,32 @@ namespace GitHubApp.Controllers
             return View(viewModel);
         }
 
-        //// GET: GHRepos/Create
-        //public IActionResult Create()
-        //{
-        //    ViewData["owner_id"] = new SelectList(_context.GHRepoOwners, "id", "id");
-        //    return View();
-        //}
+        // GET: GHRepos/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //// POST: GHRepos/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("id,name,full_name,owner_id,private,html_url,description,fork,created_at,updated_at,pushed_at,stargazers_count,watchers_count,language,score")] GHRepo gHRepo)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(gHRepo);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["owner_id"] = new SelectList(_context.GHRepoOwners, "id", "id", gHRepo.owner_id);
-        //    return View(gHRepo);
-        //}
+            var ghrepo = await _repositories.FindAsync((int) id);
 
-        //// GET: GHRepos/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (ghrepo == null)
+            {
+                return NotFound();
+            }
 
-        //    var gHRepo = await _context.GHRepos.SingleOrDefaultAsync(m => m.id == id);
-        //    if (gHRepo == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewData["owner_id"] = new SelectList(_context.GHRepoOwners, "id", "id", gHRepo.owner_id);
-        //    return View(gHRepo);
-        //}
+            return View(ghrepo);
+        }
 
-        //// POST: GHRepos/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("id,name,full_name,owner_id,private,html_url,description,fork,created_at,updated_at,pushed_at,stargazers_count,watchers_count,language,score")] GHRepo gHRepo)
-        //{
-        //    if (id != gHRepo.id)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(gHRepo);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!GHRepoExists(gHRepo.id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["owner_id"] = new SelectList(_context.GHRepoOwners, "id", "id", gHRepo.owner_id);
-        //    return View(gHRepo);
-        //}
-
-        //// GET: GHRepos/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var gHRepo = await _context.GHRepos
-        //        .Include(g => g.owner)
-        //        .SingleOrDefaultAsync(m => m.id == id);
-        //    if (gHRepo == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(gHRepo);
-        //}
-
-        //// POST: GHRepos/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var gHRepo = await _context.GHRepos.SingleOrDefaultAsync(m => m.id == id);
-        //    _context.GHRepos.Remove(gHRepo);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+        // POST: GHRepos/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _repositories.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
 
         // GET: GHRepos/Import
         public async Task<IActionResult> Import()
@@ -174,15 +94,10 @@ namespace GitHubApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //public async Task<IActionResult> DeleteImported()
-        //{
-        //    var gitHubAppContext = _context.GHRepos.Include(g => g.owner);
-        //    return RedirectToAction(nameof(Index));
-        //}
-
-        //private bool GHRepoExists(int id)
-        //{
-        //    return _context.GHRepos.Any(e => e.id == id);
-        //}
+        public async Task<IActionResult> DeleteImported()
+        {
+            await _repositories.DeleteAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

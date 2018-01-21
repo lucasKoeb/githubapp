@@ -30,22 +30,7 @@ namespace GitHubApp.GitHubApp
         public Task<List<GHRepo>> RetrieveAsync(string language = "")
         {                        
             return _GHRepoRepository.RetrieveAsync(language);
-        }
-
-        public Task<GHRepo> RetrieveAsync(int id)
-        {
-            return _GHRepoRepository.RetrieveAsync(id);
-        }        
-
-        public GHRepo BeforeAdd(GHRepo ghrepo)
-        {
-            if (_GHRepoOwnerRepository.Exists(ghrepo.owner))
-            {
-                ghrepo.owner_id = ghrepo.owner.id;
-                ghrepo.owner = null;
-            }
-            return ghrepo;
-        }
+        }       
 
         public async Task Import(List<string> languages)
         {
@@ -55,6 +40,22 @@ namespace GitHubApp.GitHubApp
                 repositories.AddRange(DeserializeJson(await _api.GetRepositoriesAsync(language)).ToList());                               
             }
             await _GHRepoRepository.SaveAsync(repositories);
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            await _GHRepoRepository.RemoveAsync(id);
+        }
+
+        public async Task DeleteAsync()
+        {
+            await _GHRepoRepository.RemoveAsync(await _GHRepoRepository.RetrieveAsync());
+            await _GHRepoOwnerRepository.RemoveAsync(await _GHRepoOwnerRepository.RetrieveAsync());
+        }
+
+        public async Task<GHRepo> FindAsync(int id)
+        {
+            return await _GHRepoRepository.RetrieveAsync(id);            
         }
     }
 }

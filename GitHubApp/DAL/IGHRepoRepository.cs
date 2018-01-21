@@ -10,6 +10,8 @@ namespace GitHubApp.DAL
     {       
         Task<List<GHRepo>> RetrieveAsync(string language = "");
         Task<GHRepo> RetrieveAsync(int id);
-        Task SaveAsync(List<GHRepo> repositories);        
+        Task SaveAsync(List<GHRepo> repositories);
+        Task RemoveAsync(int id);
+        Task RemoveAsync(List<GHRepo> repositories);
     }
 }

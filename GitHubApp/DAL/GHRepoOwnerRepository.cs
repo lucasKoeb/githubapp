@@ -1,5 +1,6 @@
 ﻿using GitHubApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,31 +15,17 @@ namespace GitHubApp.DAL
         public GHRepoOwnerRepository([FromServices] GitHubAppContext context)
         {
             _dbContext = context;
-        }
-
-        public async Task<GHRepoOwner> CreateAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Exists(GHRepoOwner ghrepoOwner)
-        {
-            return _dbContext.GHRepoOwners.Any(e => e.id == ghrepoOwner.id);
-        }
+        }            
 
         public async Task<List<GHRepoOwner>> RetrieveAsync()
         {
-            throw new NotImplementedException();
+            return await _dbContext.GHRepoOwners.ToListAsync();
         }
 
-        public async Task<GHRepoOwner> SaveAsync(GHRepoOwner ghrepoOwner)
+        public async Task RemoveAsync(List<GHRepoOwner> owners)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<GHRepoOwner> SaveAsync(int id, GHRepoOwner ghrepoOwner)
-        {
-            throw new NotImplementedException();
+            _dbContext.RemoveRange(owners);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

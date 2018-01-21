@@ -14,7 +14,7 @@ namespace GitHubApp.DAL
 
         public GHRepoRepository([FromServices] GitHubAppContext context)
         {
-            _dbContext = context;            
+            _dbContext = context;
         }     
 
         public async Task<List<GHRepo>> RetrieveAsync(string language = "")
@@ -27,7 +27,7 @@ namespace GitHubApp.DAL
             {
                 return await _dbContext.GHRepos.Where(r => r.language == language).ToListAsync();
             }
-        }                
+        }
 
         public async Task<GHRepo> RetrieveAsync(int id)
         {
@@ -43,6 +43,19 @@ namespace GitHubApp.DAL
         public async Task SaveAsync(List<GHRepo> repositories)
         {
             await _dbContext.AddRangeAsync(repositories);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task RemoveAsync(int id)
+        {
+            var gHRepo = await _dbContext.GHRepos.SingleOrDefaultAsync(m => m.id == id);
+            _dbContext.GHRepos.Remove(gHRepo);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task RemoveAsync(List<GHRepo> repositories)
+        {
+            _dbContext.RemoveRange(repositories);            
             await _dbContext.SaveChangesAsync();
         }
     }

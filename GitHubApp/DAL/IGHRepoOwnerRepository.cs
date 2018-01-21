@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 namespace GitHubApp.DAL
 {
     public interface IGHRepoOwnerRepository
-    {
-        Task<GHRepoOwner> CreateAsync();
-        Task<List<GHRepoOwner>> RetrieveAsync();
-        Task<GHRepoOwner> SaveAsync(GHRepoOwner ghrepoOwner);        
-        Task<GHRepoOwner> SaveAsync(int id, GHRepoOwner ghrepoOwner);
-        bool Exists(GHRepoOwner ghrepoOwner);
+    {        
+        Task<List<GHRepoOwner>> RetrieveAsync();               
+        Task RemoveAsync(List<GHRepoOwner> owners);
     }
 }
