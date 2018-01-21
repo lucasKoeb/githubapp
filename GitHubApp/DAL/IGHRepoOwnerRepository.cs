@@ -10,8 +10,8 @@ namespace GitHubApp.DAL
     {
         Task<GHRepoOwner> CreateAsync();
         Task<List<GHRepoOwner>> RetrieveAsync();
-        Task<GHRepoOwner> SaveAsync(GHRepoOwner ghrepo);
-        Task<GHRepoOwner> SaveAsync(int id, GHRepoOwner ghrepo);
-        bool Exists(GHRepoOwner ghrepo);
+        Task<GHRepoOwner> SaveAsync(GHRepoOwner ghrepoOwner);        
+        Task<GHRepoOwner> SaveAsync(int id, GHRepoOwner ghrepoOwner);
+        bool Exists(GHRepoOwner ghrepoOwner);
     }
 }

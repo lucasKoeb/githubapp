@@ -12,10 +12,13 @@ namespace GitHubApp.GitHubApp
     {
         private readonly IGHRepoRepository _GHRepoRepository;
         private readonly IGHRepoOwnerRepository _GHRepoOwnerRepository;
-        public Repositories(IGHRepoRepository GHRepoRepository, IGHRepoOwnerRepository GHRepoOwnerRepository)
+        private readonly IGitHubAPI _api;
+
+        public Repositories(IGHRepoRepository GHRepoRepository, IGHRepoOwnerRepository GHRepoOwnerRepository, IGitHubAPI api)
         {
             _GHRepoRepository = GHRepoRepository;
             _GHRepoOwnerRepository = GHRepoOwnerRepository;
+            _api = api;
         }
 
         public List<GHRepo> DeserializeJson(string json)
@@ -24,22 +27,15 @@ namespace GitHubApp.GitHubApp
             return values.items.ToObject<List<GHRepo>>();
         }
 
-        internal Task<List<GHRepo>> RetrieveAsync()
-        {
-            return _GHRepoRepository.RetrieveAsync();
+        public Task<List<GHRepo>> RetrieveAsync(string language = "")
+        {                        
+            return _GHRepoRepository.RetrieveAsync(language);
         }
 
-        internal Task<GHRepo> RetrieveAsync(int id)
+        public Task<GHRepo> RetrieveAsync(int id)
         {
             return _GHRepoRepository.RetrieveAsync(id);
-        }
-
-        public GHRepo Save(GHRepo ghrepo)
-        {
-            ghrepo = BeforeAdd(ghrepo);
-            _GHRepoRepository.SaveAsync(ghrepo);
-            return ghrepo;
-        }
+        }        
 
         public GHRepo BeforeAdd(GHRepo ghrepo)
         {
@@ -48,7 +44,17 @@ namespace GitHubApp.GitHubApp
                 ghrepo.owner_id = ghrepo.owner.id;
                 ghrepo.owner = null;
             }
-            return ghrepo;            
+            return ghrepo;
+        }
+
+        public async Task Import(List<string> languages)
+        {
+            List<GHRepo> repositories = new List<GHRepo>();
+            foreach (var language in languages)
+            {               
+                repositories.AddRange(DeserializeJson(await _api.GetRepositoriesAsync(language)).ToList());                               
+            }
+            await _GHRepoRepository.SaveAsync(repositories);
         }
     }
 }

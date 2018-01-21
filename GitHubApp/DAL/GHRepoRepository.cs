@@ -14,35 +14,20 @@ namespace GitHubApp.DAL
 
         public GHRepoRepository([FromServices] GitHubAppContext context)
         {
-            _dbContext = context;
-        }
+            _dbContext = context;            
+        }     
 
-        public async Task<GHRepo> CreateAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<GHRepo>> RetrieveAsync()
+        public async Task<List<GHRepo>> RetrieveAsync(string language = "")
         {          
-            return await _dbContext.GHRepos.ToListAsync();
-        }
-
-        public async Task<GHRepo> SaveAsync(GHRepo ghrepo)
-        {            
-            _dbContext.Add(ghrepo);
-            await _dbContext.SaveChangesAsync();
-            return ghrepo;
-        }
-
-        public async Task<GHRepo> SaveAsync(int id, GHRepo ghrepo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Exists(GHRepo ghrepo)
-        {
-            throw new NotImplementedException();
-        }
+            if (String.IsNullOrEmpty(language))
+            {
+                return await _dbContext.GHRepos.ToListAsync();
+            }
+            else
+            {
+                return await _dbContext.GHRepos.Where(r => r.language == language).ToListAsync();
+            }
+        }                
 
         public async Task<GHRepo> RetrieveAsync(int id)
         {
@@ -53,6 +38,12 @@ namespace GitHubApp.DAL
             }
 
             return ghrepo;
+        }
+        
+        public async Task SaveAsync(List<GHRepo> repositories)
+        {
+            await _dbContext.AddRangeAsync(repositories);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

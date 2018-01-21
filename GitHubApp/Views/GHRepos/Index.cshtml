@@ -7,26 +7,50 @@
 
 <h2>@ViewData["Title"]</h2>
 
+
+<div class="row">
+    <div class="col-md-6">
+        @foreach (var l in (List<string>)ViewData["Languages"])
+        {
+            @if (l == (string)ViewData["SelectedLanguage"])
+            {
+                <a class="btn btn-primary" asp-action="Index">@l</a>
+            }
+            else
+            {
+                <a class="btn btn-default" asp-action="Index" asp-route-language="@l">@l</a>
+            }
+        }
+    </div>
+    <div class="col-md-6">
+        <div class="text-left">
+            <a class="btn btn-primary" asp-action="Import">Importar Repositórios</a>
+            <a class="btn btn-danger" asp-action="DeleteImported">Remover Todos</a>
+        </div>
+    </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.name)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.name)
-            </td>            
-            <td>               
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

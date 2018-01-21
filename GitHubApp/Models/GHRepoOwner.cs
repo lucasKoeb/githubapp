@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace GitHubApp.Models
         [Range(1, int.MaxValue)]
         public int id { get; set; }
         [Required]
+        [DisplayName("Login")]
         public string login { get; set; }
 
         public virtual List<GHRepo> repositories { get; set; }

@@ -7,12 +7,9 @@ using System.Threading.Tasks;
 namespace GitHubApp.DAL
 {
     public interface IGHRepoRepository
-    {
-        Task<GHRepo> CreateAsync();
-        Task<List<GHRepo>> RetrieveAsync();
+    {       
+        Task<List<GHRepo>> RetrieveAsync(string language = "");
         Task<GHRepo> RetrieveAsync(int id);
-        Task<GHRepo> SaveAsync(GHRepo ghrepo);
-        Task<GHRepo> SaveAsync(int id, GHRepo ghrepo);
-        bool Exists(GHRepo ghrepo);
+        Task SaveAsync(List<GHRepo> repositories);        
     }
 }

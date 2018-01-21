@@ -1,4 +1,5 @@
 ﻿using GitHubApp.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +9,21 @@ namespace GitHubApp.DAL
 {
     public class GHRepoOwnerRepository : IGHRepoOwnerRepository
     {
+        private GitHubAppContext _dbContext { get; set; }
+
+        public GHRepoOwnerRepository([FromServices] GitHubAppContext context)
+        {
+            _dbContext = context;
+        }
+
         public async Task<GHRepoOwner> CreateAsync()
         {
             throw new NotImplementedException();
         }
 
-        public bool Exists(GHRepoOwner ghrepo)
+        public bool Exists(GHRepoOwner ghrepoOwner)
         {
-            throw new NotImplementedException();
+            return _dbContext.GHRepoOwners.Any(e => e.id == ghrepoOwner.id);
         }
 
         public async Task<List<GHRepoOwner>> RetrieveAsync()
@@ -23,12 +31,12 @@ namespace GitHubApp.DAL
             throw new NotImplementedException();
         }
 
-        public async Task<GHRepoOwner> SaveAsync(GHRepoOwner ghrepo)
+        public async Task<GHRepoOwner> SaveAsync(GHRepoOwner ghrepoOwner)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<GHRepoOwner> SaveAsync(int id, GHRepoOwner ghrepo)
+        public async Task<GHRepoOwner> SaveAsync(int id, GHRepoOwner ghrepoOwner)
         {
             throw new NotImplementedException();
         }

@@ -8,6 +8,6 @@ namespace GitHubApp.GitHubApp
 {
     public interface IGitHubAPI
     {
-        Task<string> GetRepositoriesAsync(string languages);
+        Task<string> GetRepositoriesAsync(string language);
     }
 }

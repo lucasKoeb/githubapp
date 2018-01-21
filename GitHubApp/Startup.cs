@@ -30,9 +30,11 @@ namespace GitHubApp
                     options => options.UseNpgsql(
                 Configuration.GetConnectionString("PSQLDatabase")));
 
+            services.Configure<LanguageConfiguration>(Configuration.GetSection("LanguageConfiguration"));
+
             services.AddMvc();
 
-            services.AddTransient<IGitHubAPI, GitHubAPI>();
+            services.AddScoped<IGitHubAPI, GitHubAPI>();
             services.AddScoped<IGHRepoRepository, GHRepoRepository>();
             services.AddScoped<IGHRepoOwnerRepository, GHRepoOwnerRepository>();
         }

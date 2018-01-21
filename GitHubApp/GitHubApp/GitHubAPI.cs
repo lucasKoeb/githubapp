@@ -4,17 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-
+using System.Net.Http.Formatting;
+using System.Text.Encodings.Web;
+  
 namespace GitHubApp.GitHubApp
 {
     public class GitHubAPI : IGitHubAPI
     {
-        static HttpClient httpClient = new HttpClient();
-        
+                
         public async Task<string> GetRepositoriesAsync(string language)
         {
+            HttpClient httpClient = new HttpClient();
             string path = "search/repositories";
-            string query = $"?q=language:{language}";
+            string query = $"?q=language:{System.Net.WebUtility.UrlEncode(language.ToLower())}&sort=stars&order=desc";
             httpClient.BaseAddress = new Uri("https://api.github.com/");
 
             httpClient.DefaultRequestHeaders.Accept.Clear();
