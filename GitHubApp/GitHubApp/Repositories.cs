@@ -28,16 +28,18 @@ namespace GitHubApp.GitHubApp
         }
 
         public Task<List<GHRepo>> RetrieveAsync(string language = "")
-        {                        
+        {
             return _GHRepoRepository.RetrieveAsync(language);
         }
 
         public async Task Import(List<string> languages)
         {
+            await _GHRepoRepository.RemoveAsync(await _GHRepoRepository.RetrieveAsync());
+            await _GHRepoOwnerRepository.RemoveAsync(await _GHRepoOwnerRepository.RetrieveAsync());
             List<GHRepo> repositories = new List<GHRepo>();
             foreach (var language in languages)
-            {               
-                repositories.AddRange(DeserializeJson(await _api.GetRepositoriesAsync(language)).ToList());                               
+            {
+                repositories.AddRange(DeserializeJson(await _api.GetRepositoriesAsync(language)).ToList());
             }
             await _GHRepoRepository.SaveAsync(repositories);
         }
@@ -55,7 +57,7 @@ namespace GitHubApp.GitHubApp
 
         public async Task<GHRepo> FindAsync(int id)
         {
-            return await _GHRepoRepository.RetrieveAsync(id);            
+            return await _GHRepoRepository.RetrieveAsync(id);
         }
 
         public async Task<PaginatedList<GHRepo>> RetrieveAsync(int? current_page, string language = "")

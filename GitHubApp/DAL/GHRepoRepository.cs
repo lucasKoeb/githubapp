@@ -55,7 +55,7 @@ namespace GitHubApp.DAL
 
         public async Task RemoveAsync(List<GHRepo> repositories)
         {
-            _dbContext.RemoveRange(repositories);            
+            _dbContext.RemoveRange(repositories);       
             await _dbContext.SaveChangesAsync();
         }
 
@@ -72,7 +72,7 @@ namespace GitHubApp.DAL
                                       .OrderByDescending(r => r.stargazers_count)
                                       .Include(r => r.owner), 
                     current_page ?? 1, 
-                    page_size);                
+                    page_size);
             }
         }
     }
