@@ -58,5 +58,18 @@ namespace GitHubApp.DAL
             _dbContext.RemoveRange(repositories);            
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<PaginatedList<GHRepo>> RetrieveAsync(int page_size, int? current_page, string language = "")
+        {
+            if (String.IsNullOrEmpty(language))
+            {
+                return await PaginatedList<GHRepo>.CreateAsync(_dbContext.GHRepos, current_page ?? 1, page_size);
+            }
+            else
+            {
+                return await PaginatedList<GHRepo>.CreateAsync(_dbContext.GHRepos.Where(r => r.language == language), current_page ?? 1, page_size);                
+            }
+            
+        }
     }
 }

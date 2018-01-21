@@ -49,7 +49,7 @@ namespace GitHubApp
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/GHRepos/Error");
             }
 
             app.UseStaticFiles();

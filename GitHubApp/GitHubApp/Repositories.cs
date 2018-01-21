@@ -30,7 +30,7 @@ namespace GitHubApp.GitHubApp
         public Task<List<GHRepo>> RetrieveAsync(string language = "")
         {                        
             return _GHRepoRepository.RetrieveAsync(language);
-        }       
+        }
 
         public async Task Import(List<string> languages)
         {
@@ -56,6 +56,12 @@ namespace GitHubApp.GitHubApp
         public async Task<GHRepo> FindAsync(int id)
         {
             return await _GHRepoRepository.RetrieveAsync(id);            
+        }
+
+        public async Task<PaginatedList<GHRepo>> RetrieveAsync(int? current_page, string language = "")
+        {
+            int page_size = 10;
+            return await _GHRepoRepository.RetrieveAsync(page_size, current_page, language);
         }
     }
 }

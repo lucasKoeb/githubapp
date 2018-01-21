@@ -10,6 +10,7 @@ using GitHubApp.GitHubApp;
 using Newtonsoft.Json;
 using GitHubApp.DAL;
 using Microsoft.Extensions.Options;
+using System.Diagnostics;
 
 namespace GitHubApp.Controllers
 {
@@ -25,19 +26,19 @@ namespace GitHubApp.Controllers
         }
 
         // GET: GHRepos
-        public async Task<IActionResult> Index(string language)
-        {
+        public async Task<IActionResult> Index(int? page, string language)
+        {           
             ViewData["Languages"] = _languages;
-            List<GHRepo> viewModel = null;
+            PaginatedList<GHRepo> viewModel = null;
 
             if (!String.IsNullOrEmpty(language))
             {
                 ViewData["SelectedLanguage"] = language;
-                viewModel = await _repositories.RetrieveAsync(language);
+                viewModel = await _repositories.RetrieveAsync(page, language);
             }
             else
             {
-                viewModel = await _repositories.RetrieveAsync();                                
+                viewModel = await _repositories.RetrieveAsync(page);                                
             }
             return View(viewModel);
         }
@@ -58,34 +59,7 @@ namespace GitHubApp.Controllers
             }
 
             return View(viewModel);
-        }
-
-        // GET: GHRepos/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var ghrepo = await _repositories.FindAsync((int) id);
-
-            if (ghrepo == null)
-            {
-                return NotFound();
-            }
-
-            return View(ghrepo);
-        }
-
-        // POST: GHRepos/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            await _repositories.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
-        }
+        }        
 
         // GET: GHRepos/Import
         public async Task<IActionResult> Import()
@@ -98,6 +72,11 @@ namespace GitHubApp.Controllers
         {
             await _repositories.DeleteAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
