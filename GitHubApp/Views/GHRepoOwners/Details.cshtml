@@ -1,0 +1,33 @@
+﻿@model GitHubApp.Models.GHRepoOwner
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Html.DisplayNameFor(model => model.login) @Html.DisplayFor(model => model.login)</h2>
+
+<p>Repositórios</p>
+@foreach (var item in Model.repositories)
+{
+    <hr />
+    <div class="row">
+        <div class="col-md-10">
+            <h4>
+                <a asp-action="Details" asp-controller="GHRepos" asp-route-id="@item.id">@Html.DisplayFor(modelItem => item.name)</a>
+                (@Html.DisplayFor(modelItem => item.full_name))
+            </h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <p>@Html.DisplayFor(modelItem => item.description)</p>
+            <a href="@Html.DisplayFor(modelItem => item.html_url)">@Html.DisplayFor(modelItem => item.html_url)</a>           
+            <p>
+                <i class="fa fa-small fa-star"></i> @Html.DisplayFor(modelItem => item.stargazers_count) |
+                @Html.DisplayFor(modelItem => item.language)
+            </p>
+        </div>
+    </div>
+
+}

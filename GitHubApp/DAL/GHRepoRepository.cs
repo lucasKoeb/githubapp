@@ -31,7 +31,7 @@ namespace GitHubApp.DAL
 
         public async Task<GHRepo> RetrieveAsync(int id)
         {
-            GHRepo ghrepo = await _dbContext.GHRepos.SingleOrDefaultAsync(m => m.id == id);
+            GHRepo ghrepo = await _dbContext.GHRepos.Include(r => r.owner).SingleOrDefaultAsync(m => m.id == id);
             if (ghrepo == null)
             {
                 return null;
@@ -63,13 +63,17 @@ namespace GitHubApp.DAL
         {
             if (String.IsNullOrEmpty(language))
             {
-                return await PaginatedList<GHRepo>.CreateAsync(_dbContext.GHRepos, current_page ?? 1, page_size);
+                return await PaginatedList<GHRepo>.CreateAsync(_dbContext.GHRepos.OrderByDescending(r => r.stargazers_count).Include(r => r.owner), current_page ?? 1, page_size);
             }
             else
             {
-                return await PaginatedList<GHRepo>.CreateAsync(_dbContext.GHRepos.Where(r => r.language == language), current_page ?? 1, page_size);                
+                return await PaginatedList<GHRepo>.CreateAsync(
+                    _dbContext.GHRepos.Where(r => r.language == language)
+                                      .OrderByDescending(r => r.stargazers_count)
+                                      .Include(r => r.owner), 
+                    current_page ?? 1, 
+                    page_size);                
             }
-            
         }
     }
 }

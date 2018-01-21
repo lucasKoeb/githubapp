@@ -5,4 +5,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <h2>@Html.DisplayFor(model => model.name)</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <p>@Html.DisplayFor(model => model.description)</p>
+        <p>
+            <b>@Html.DisplayNameFor(model => model.stargazers_count)</b>
+            <span class="badge">
+                <i class="fa fa-small fa-star"> @Html.DisplayFor(model => model.stargazers_count)</i>
+            </span>
+        </p>
+        <p>
+            <b>@Html.DisplayNameFor(model => model.forks_count)</b>
+            <span class="badge">
+                <i class="fa fa-small fa-code-fork"> @Html.DisplayFor(model => model.forks_count)</i>
+            </span>
+        </p>
+    </div>
+    <div class="col-md-6">
+        <p><a href="@Html.DisplayFor(model => model.html_url)">@Html.DisplayFor(model => model.html_url)</a></p>
+        <p><b>@Html.DisplayNameFor(model => model.created_at):</b> @Html.DisplayFor(model => model.created_at)</p>
+        <p><b>@Html.DisplayNameFor(model => model.pushed_at):</b> @Html.DisplayFor(model => model.pushed_at)</p>
+        <p><b>@Html.DisplayNameFor(model => model.owner):</b> <a asp-controller="GHRepoOwners" asp-action="Details" asp-route-id="@Model.owner_id">@Html.DisplayFor(model => model.owner.login)</a></p>
+    </div>
+
+</div>
+<h4>Clone</h4>
+<div class="row">
+    <div class="col-md-6">
+        <p>
+            <b>@Html.DisplayNameFor(model => model.git_url):</b> @Html.TextBoxFor(model => model.git_url, new { @readonly = "readonly", @class = "form-control" })
+        </p>
+        <p>
+            <b>@Html.DisplayNameFor(model => model.ssh_url):</b> @Html.TextBoxFor(model => model.ssh_url, new { @readonly = "readonly", @class = "form-control" })
+        </p>
+        <p>
+            <b>@Html.DisplayNameFor(model => model.clone_url):</b> @Html.TextBoxFor(model => model.clone_url, new { @readonly = "readonly", @class = "form-control" })
+        </p>
+        <p>
+            <b>@Html.DisplayNameFor(model => model.svn_url):</b> @Html.TextBoxFor(model => model.svn_url, new { @readonly = "readonly", @class = "form-control" })
+        </p>
+    </div>
+</div>

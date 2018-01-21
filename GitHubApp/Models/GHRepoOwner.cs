@@ -13,7 +13,7 @@ namespace GitHubApp.Models
         [Range(1, int.MaxValue)]
         public int id { get; set; }
         [Required]
-        [DisplayName("Login")]
+        [DisplayName("Usuário")]
         public string login { get; set; }
 
         public virtual List<GHRepo> repositories { get; set; }

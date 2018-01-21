@@ -11,9 +11,10 @@ using System;
 namespace GitHubApp.Migrations
 {
     [DbContext(typeof(GitHubAppContext))]
-    partial class GitHubAppContextModelSnapshot : ModelSnapshot
+    [Migration("20180121192857_AddForksCountToGhRepo")]
+    partial class AddForksCountToGhRepo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

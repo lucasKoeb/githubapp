@@ -27,5 +27,10 @@ namespace GitHubApp.DAL
             _dbContext.RemoveRange(owners);
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<GHRepoOwner> RetrieveAsync(int id)
+        {
+            return await _dbContext.GHRepoOwners.Where(r => r.id == id).Include(r => r.repositories).FirstOrDefaultAsync();
+        }
     }
 }

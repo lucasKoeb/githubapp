@@ -11,9 +11,10 @@ using System;
 namespace GitHubApp.Migrations
 {
     [DbContext(typeof(GitHubAppContext))]
-    partial class GitHubAppContextModelSnapshot : ModelSnapshot
+    [Migration("20180121191932_AddUrlFieldsToGHRepo")]
+    partial class AddUrlFieldsToGHRepo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,8 +33,6 @@ namespace GitHubApp.Migrations
                     b.Property<string>("description");
 
                     b.Property<bool>("fork");
-
-                    b.Property<int>("forks_count");
 
                     b.Property<string>("full_name");
 

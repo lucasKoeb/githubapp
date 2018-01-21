@@ -8,7 +8,8 @@ namespace GitHubApp.DAL
 {
     public interface IGHRepoOwnerRepository
     {        
-        Task<List<GHRepoOwner>> RetrieveAsync();               
+        Task<List<GHRepoOwner>> RetrieveAsync();
+        Task<GHRepoOwner> RetrieveAsync(int id);
         Task RemoveAsync(List<GHRepoOwner> owners);
     }
 }
